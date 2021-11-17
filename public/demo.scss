@@ -1,0 +1,80 @@
+@import "./src/main";
+@import "elr-scss-reset/src/main";
+
+@include elr-reset;
+
+* {
+  font-family: Roboto;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+  width: 100%;
+}
+
+.wrapper {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.main-heading {
+  font-size: 36px;
+  font-weight: 900;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.subheading {
+  font-size: 16px;
+  color: #111;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.demo-content {
+  position: relative;
+  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.popover-left {
+  @include elr-popover;
+  margin: 16px;
+}
+
+.popover-top {
+  @include elr-popover(
+    $config: (
+      direction: "top",
+    )
+  );
+  margin: 16px;
+}
+
+.popover-bottom {
+  @include elr-popover(
+    $config: (
+      direction: "bottom",
+    )
+  );
+  margin: 16px;
+}
+
+.popover-right {
+  @include elr-popover(
+    $config: (
+      direction: "right",
+    )
+  );
+  margin: 16px;
+}

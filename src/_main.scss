@@ -1,2 +1,200 @@
+@use "sass:math";
 @import "elr-scss-functions/src/main";
-@import "src/popovers";
+
+// Popovers
+
+@mixin elr-triangle($config: ()) {
+  $config: extend(
+    (
+      direction: "top",
+      base: 50px,
+      height: "half",
+      color: #ccc,
+    ),
+    $config
+  );
+
+  $direction: map-get($config, direction);
+  $base: map-get($config, base);
+  $height: map-get($config, height);
+  $color: map-get($config, color);
+
+  @if (
+    $direction ==
+      "top" or
+      $direction ==
+      "right" or
+      $direction ==
+      "bottom" or
+      $direction ==
+      "left"
+  ) {
+    @if ($height == "half") {
+      $height: math.div($base, 2);
+    } @else if ($height == auto) {
+      $height: $base;
+    }
+  } @else if
+    (
+      $direction ==
+        "top-left" or
+        $direction ==
+        "top-right" or
+        $direction ==
+        "bottom-left" or
+        $direction ==
+        "bottom-right"
+    )
+  {
+    @if ($height == "half" or $height == auto) {
+      $height: math.div($base, 2);
+    }
+  }
+  // width is divided by 2 because it's used twice !
+  $base: math.div($base, 2);
+  width: 0;
+  height: 0;
+
+  @if ($direction == "top") {
+    // border-top
+    border-right: $base solid transparent;
+    border-bottom: $height solid $color;
+    border-left: $base solid transparent;
+  } @else if ($direction == "bottom") {
+    border-top: $height solid $color;
+    border-right: $base solid transparent;
+    // border-bottom
+    border-left: $base solid transparent;
+  } @else if ($direction == "left") {
+    border-top: $base solid transparent;
+    border-right: $height solid $color;
+    border-bottom: $base solid transparent;
+    // border-left
+  } @else if ($direction == "right") {
+    border-top: $base solid transparent;
+    // border-right
+    border-bottom: $base solid transparent;
+    border-left: $height solid $color;
+  } @else if ($direction == "top-left") {
+    border-top: $height solid $color;
+    border-right: $base solid transparent;
+    border-bottom: $height solid transparent;
+    border-left: $base solid $color;
+  } @else if ($direction == "top-right") {
+    border-top: $height solid $color;
+    border-right: $base solid $color;
+    border-bottom: $height solid transparent;
+    border-left: $base solid transparent;
+  } @else if ($direction == "bottom-left") {
+    border-top: $height solid transparent;
+    border-right: $base solid transparent;
+    border-bottom: $height solid $color;
+    border-left: $base solid $color;
+  } @else if ($direction == "bottom-right") {
+    border-top: $height solid transparent;
+    border-right: $base solid $color;
+    border-bottom: $height solid $color;
+    border-left: $base solid transparent;
+  }
+}
+
+@mixin elr-popover($config: ()) {
+  $config: extend(
+    (
+      direction: "left",
+      background-color: #1976d2,
+      color: #fff,
+      width: 200px,
+      border-radius: 5px,
+    ),
+    $config
+  );
+
+  $direction: map-get($config, direction);
+  $background-color: map-get($config, background-color);
+  $color: map-get($config, color);
+  $width: map-get($config, width);
+  $border-radius: map-get($config, border-radius);
+
+  background-color: $background-color;
+  width: $width;
+  border-radius: $border-radius;
+  min-height: 50px;
+  padding: 16px;
+  margin: 16px 0 8px;
+  color: $color;
+  position: relative;
+  z-index: 1;
+
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+
+  @if $direction == "left" {
+    &:before {
+      @include elr-triangle(
+        $config: (
+          direction: right,
+          base: 20px,
+          height: half,
+          color: $background-color,
+        )
+      );
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: $width;
+    }
+  } @else if $direction == "top" {
+    // bottom: 60px;
+
+    &:before {
+      @include elr-triangle(
+        $config: (
+          direction: bottom,
+          base: 20px,
+          height: half,
+          color: $background-color,
+        )
+      );
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: math.div($width, 2) - 10;
+    }
+  } @else if $direction == "bottom" {
+    &:before {
+      @include elr-triangle(
+        $config: (
+          direction: top,
+          base: 20px,
+          height: half,
+          color: $background-color,
+        )
+      );
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: math.div($width, 2) - 10;
+    }
+  } @else {
+    // $direction == right
+    &:before {
+      @include elr-triangle(
+        $config: (
+          direction: left,
+          base: 20px,
+          height: half,
+          color: $background-color,
+        )
+      );
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: -10px;
+    }
+  }
+}
