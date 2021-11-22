@@ -1,5 +1,6 @@
 @use "sass:math";
 @import "elr-scss-functions/src/main";
+@import "elr-scss-config/src/main";
 
 // Popovers
 
@@ -9,7 +10,7 @@
       direction: "top",
       base: 50px,
       height: "half",
-      color: #ccc,
+      color: $light-gray,
     ),
     $config
   );
@@ -102,10 +103,10 @@
   $config: extend(
     (
       direction: "left",
-      background-color: #1976d2,
-      color: #fff,
+      background-color: $primary-color,
+      color: $white,
       width: 200px,
-      border-radius: 5px,
+      border-radius: $border-radius,
     ),
     $config
   );
@@ -120,8 +121,8 @@
   width: $width;
   border-radius: $border-radius;
   min-height: 50px;
-  padding: 16px;
-  margin: 16px 0 8px;
+  padding: $base-fontsize;
+  margin: $base-fontsize 0 8px;
   color: $color;
   position: relative;
   z-index: 1;
