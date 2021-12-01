@@ -123,15 +123,16 @@
   min-height: 50px;
   padding: $base-fontsize;
   margin: $base-fontsize 0 8px;
-  color: $color;
   position: relative;
   z-index: 1;
+  color: $color;
 
   p {
     font-size: 14px;
     line-height: 1.5;
     margin: 0;
     padding: 0;
+    color: $color;
   }
 
   @if $direction == "left" {
